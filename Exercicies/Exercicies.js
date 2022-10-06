@@ -1,4 +1,4 @@
-const { sortAndDeduplicateDiagnostics } = require("typescript");
+const { sortAndDeduplicateDiagnostics, isEmptyBindingElement } = require("typescript");
 
 //* exercicies day 1
 
@@ -282,8 +282,6 @@ function reverseArrayInPlace(arr) {
   return arr;
 }
 
-function binarysearch() {}
-
 function removeArrayDuplicateElements(arr) {
   if (!Array.isArray(arr)) throw new Error("Not an array");
 
@@ -336,9 +334,6 @@ console.log("----------------------------");
 
 */
 
-//*Array exercises part 2
-
-
 function arrayToList(arr){
   if(!Array.isArray(arr)) throw new Error("Not an array");
   let list = null;
@@ -352,11 +347,13 @@ function arrayToList(arr){
 function listToArray(list){
 
   let arr = [];
-  for(let node = list; node; node = node.rest){
+  for(let node = list; node; node = node.rest) {
     arr.push(node.value);
   }
   return arr;
 }
+
+
 
 
 //! Recursive function 
@@ -378,7 +375,13 @@ function deepEqual( obj1, obj2){
 };
 
 
-function quickSort(arr){
+
+
+
+
+//* SeconPart 
+
+function quickSort(arr) {
   if(!Array.isArray(arr)) throw new Error("Not an array");
 
   if(arr.length <= 1) return arr;
@@ -396,45 +399,69 @@ function quickSort(arr){
   return [...quickSort(left), pivot, ...quickSort(right)];
 }
 
+console.log("\n________________Binary Tree_______________ \n");
 
-function binarySearch(arr, value){
-  if(!Array.isArray(arr)) throw new Error("Not an array");
+class node{
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
 
-  let left = 0, right = arr.length - 1;
+class BinarySearchTree {
+  
+  constructor() {
+    this.root = null;
+  }
 
-  while(left <= right){
-    let middle = Math.floor((left + right) / 2);
-    if(arr[middle] === value) return middle;
-    if(arr[middle] < value){
-      left = middle + 1;
+  isEmpty() {
+    return this.root === null;
+
+  }
+
+  insert(value) {
+    const newNode = new node(value);
+    if(this.isEmpty()){
+     this.root = newNode;
     } else {
-      right = middle - 1;
+      this.insertNode(this.root, newNode);
     }
   }
-  return -1;
-}
 
-console.log(binarySearch([55,45,25,75,80, 15, 40 ], 30));
-console.log(binarySearch(arrayExemple3, 30));
-
-function arrayToBinaryTree(arr){
-  if(!Array.isArray(arr)) throw new Error("Not an array");
-
-  let tree = null;
-  for(let i = 0; i < arr.length; i++){
-    tree = add(tree, arr[i]);
+  insertNode(root, newNode) {
+    if(newNode.value < root.value){
+      if(root.left === null){
+        root.left = newNode;
+      } else {
+        this.insertNode(root.left, newNode);
+      }
+    }
   }
-  return tree;
 
-}
-
-function add(tree, value){
-  if(tree == null) return {value, left: null, right: null};
-
-  if(value < tree.value){
-    tree.left = add(tree.left, value);
-  } else {
-    tree.right = add(tree.right, value);
+  search(root ,value) {
+    if(!root) {
+      return false;
+    }else {
+      if(root.value === value) {
+        return true;
+      }else if(value < root.value) {
+        return this.search(root.left, value);
+      }else {
+        return this.search(root.right, value);
+      }
+    } 
   }
-  return tree;
 }
+
+const bst = new BinarySearchTree();
+console.log("Tree is empty?", bst.isEmpty());
+
+bst.insert(10);
+bst.insert(5);
+bst.insert(15);
+
+
+console.log(bst.search(bst.root, 1));
+console.log(bst.search(bst.root, 5));
+console.log(bst.search(bst.root, 10));
