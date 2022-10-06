@@ -7,7 +7,10 @@ let strSnakeCase = "best_pratices";
 let stringURL = "mindera.com?a=1,2&b=3,4&c=four";
 
 function triangleStars(num) {
-  var str = "";
+  let str = "";
+
+  if (typeof num !== "number") throw new Error("Not a number");
+
   for (let i = 0; i < num; i++) {
     str += "*";
     console.log(str);
@@ -16,6 +19,9 @@ function triangleStars(num) {
 
 function reverseTriangleStars(num) {
   var str = "";
+
+  if (typeof num !== "number") throw new Error("Not a number");
+
   for (let i = 0; i < num; i++) {
     str += "*";
   }
@@ -27,6 +33,8 @@ function reverseTriangleStars(num) {
 
 function triangleStars2(num) {
   var str = "";
+
+  if (typeof num !== "number") throw new Error("Not a number");
   for (let i = 0; i < num; i++) {
     str += "*";
     console.log(str.padStart(num));
@@ -34,6 +42,9 @@ function triangleStars2(num) {
 }
 
 function fizzBuzz(num) {
+
+  if (typeof num !== "number") throw new Error("Not a number");
+
   for (let i = 1; i <= num; i++) {
     if (i % 3 == 0 && i % 5 == 0) {
       console.log("FizzBuzz");
@@ -48,7 +59,10 @@ function fizzBuzz(num) {
 }
 
 function chessBoard(num, num2) {
-  var str = "";
+  if (typeof num !== "number" || typeof num2 !== "number")
+    throw new Error("Not a number");
+
+  let str = "";
   for (let i = 0; i < num; i++) {
     for (let j = 0; j < num2; j++) {
       if ((i + j) % 2 == 0) {
@@ -63,6 +77,9 @@ function chessBoard(num, num2) {
 }
 
 function shorterStringWithEllipis(str, num) {
+  if (typeof num !== "number") throw new Error("Not a number");
+  if (typeof str !== "string") throw new Error("Not a string");
+
   if (str.length > num) {
     str = str.slice(0, num);
     str += "...";
@@ -71,6 +88,8 @@ function shorterStringWithEllipis(str, num) {
 }
 
 function convertCamelcaseIntoSnakecaseFun(str) {
+  if (typeof str !== "string") throw new Error("Not a string");
+
   let str2 = "";
   for (let i = 0; i < str.length; i++) {
     if (str[i] == str[i].toUpperCase()) {
@@ -84,6 +103,8 @@ function convertCamelcaseIntoSnakecaseFun(str) {
 }
 
 convertCamelcaseIntoSnakecase = (str) => {
+  if (typeof str !== "string") throw new Error("Not a string");
+
   let str2 = "";
   for (let i = 0; i < str.length; i++) {
     if (str[i] == str[i].toUpperCase()) {
@@ -95,6 +116,8 @@ convertCamelcaseIntoSnakecase = (str) => {
 };
 
 function convertSnakecaseIntoCamelcaseFun(str) {
+  if (typeof str !== "string") throw new Error("Not a string");
+
   let str2 = "";
   for (let i = 0; i < str.length; i++) {
     if (str[i] == "_") {
@@ -108,6 +131,8 @@ function convertSnakecaseIntoCamelcaseFun(str) {
 }
 
 convertSnakecaseIntoCamelcase = (str) => {
+  if (typeof str !== "string") throw new Error("Not a string");
+
   let str2 = "";
   for (let i = 0; i < str.length; i++) {
     if (str[i] == "_") {
@@ -130,33 +155,33 @@ const slugify = (str) =>
 
 //   "mindera.com?a=1,2&b=3,4&c=four";
 
-parseURLintoObject2 = (str) => {
 
-  let str2 = str.split("?");
-  let str3 = str2[1].split("&");
-  let str4 = {};
 
-  for (let i = 0; i < str3.length; i++) {
-    let str5 = str3[i].split("=");
+function parseQueryString(url) {
+  if (typeof url !== "string") throw new Error("Not a string");
 
-    str4[str5[0]] = str5[1];
+const[_, queryString] = url.split('?');
+const queryparams = queryString.split('&');
+
+return queryparams.reduce((queryStringObject, queryParamater) => {
+  const [name, value] = queryParamater.split('=');
+
+  if(value.includes(',')) {
+    const elements = value.split(',')
+    .map((element) =>  {
+      if (!isNaN(element)) {
+        return Number(element);
+      } else {
+        return element;
+      }
+    })
+
+    queryStringObject[name] = elements;
+  } else {
+    queryStringObject[name] = value;
   }
-  console.log(str3)
-  return str4;
-};
 
+  return queryStringObject;
+}, {})};
 
-
-console.log(parseURLintoObject2(stringURL));
-
-
-function addValueInObject(object, key, value) {
-    var res = {};
-    var textObject = JSON.stringify(object);
-    if (textObject === '{}') {
-        res = JSON.parse('{"' + key + '":"' + value + '"}');
-    } else {
-        res = JSON.parse('{' + textObject.substring(1, textObject.length - 1) + ',"' + key + '":"' + value + '"}');
-    }
-    return res;
-}
+//   "mindera.com?a=1,2&b=3,4&c=four";
