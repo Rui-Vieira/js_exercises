@@ -1,7 +1,9 @@
-const { sortAndDeduplicateDiagnostics, isEmptyBindingElement } = require("typescript");
+const {
+  sortAndDeduplicateDiagnostics,
+  isEmptyBindingElement,
+} = require("typescript");
 
 //* exercicies day 1
-
 
 let quote =
   "Laziness is the mother of all bad habits. But ultimately, she is a mother and we should respect her.";
@@ -155,7 +157,6 @@ const slugify = (str) =>
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-
 function parseQueryString(url) {
   if (typeof url !== "string") throw new Error("Not a string");
 
@@ -183,52 +184,49 @@ function parseQueryString(url) {
   }, {});
 }
 
-
-
-
 //* Array exercises day 2
 
 const arrayExemple = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const arrayExemple3 = [2, 7, 9, 23, 876, 999, 666];
 const arrayDuplicateExemple = [2, 2, 2, 6, 6, 6, 3, 3, 3];
 
-
-function sumOfARange(initialRange,EndRange ){
-  if (typeof initialRange !== "number" || typeof EndRange !== "number") throw new Error("Not a number");
+function sumOfARange(initialRange, EndRange) {
+  if (typeof initialRange !== "number" || typeof EndRange !== "number")
+    throw new Error("Not a number");
   let sum = 0;
   for (let i = initialRange; i <= EndRange; i++) {
     sum += i;
   }
   return sum;
-  
 }
 
 
-function sumOfRangeWithStep(initialRange,EndRange,stepNumber ){ 
+ // ! NEED TO BE FIXED Negative spetNumber dont work
+function sumOfRangeWithStep(initialRange, EndRange, stepNumber) {
+  if (
+    typeof initialRange !== "number" ||
+    typeof EndRange !== "number" ||
+    typeof stepNumber !== "number"
+  )
+    throw new Error("Not a number");
+  if (stepNumber === 0) throw new Error("Step number can't be 0");
+  if (undefined) throw new Error("Step number can't be undefined");
 
-  if (typeof initialRange !== "number" || typeof EndRange !== "number" || typeof stepNumber !== "number") throw new Error("Not a number");
-  if(stepNumber === 0) throw new Error("Step number can't be 0");
-  if(undefined) throw new Error("Step number can't be undefined");  
-  
   let sum = 0;
 
-  if(stepNumber < 0 && initialRange > EndRange) {
-
-  for (let i = initialRange; i <= EndRange; i = stepNumber) {
-    
-    sum += i;
-    console.log(i);
-  }
-  return sum;
-
-} else  {
-  for (let i = initialRange; i <= EndRange; i+=stepNumber) {
-    sum += i;
+  if (stepNumber < 0 && initialRange > EndRange) {
+    for (let i = initialRange; i <= EndRange; i = stepNumber) {
+      sum += i;
+      console.log(i);
     }
-  return sum;
+    return sum;
+  } else {
+    for (let i = initialRange; i <= EndRange; i += stepNumber) {
+      sum += i;
+    }
+    return sum;
   }
 }
-
 
 //console.log(sumOfARange(1,10));
 //console.log(sumOfRangeWithStep(1,10,2));
@@ -249,7 +247,7 @@ function reverseArray2(arr) {
   if (!Array.isArray(arr)) throw new Error("Not an array");
 
   newArr = [];
-  arr.forEach(element => {
+  arr.forEach((element) => {
     newArr.unshift(element);
   });
   return newArr;
@@ -257,18 +255,17 @@ function reverseArray2(arr) {
 
 function reverseArray3(arr) {
   if (!Array.isArray(arr)) throw new Error("Not an array");
-  
+
   newArr = [];
-  arr.forEach(element => {
+  arr.forEach((element) => {
     newArr.push(element);
   });
   return newArr.reverse();
 }
 
 function reverseArray4(arr) {
-  if(!Array.isArray(arr)) throw new Error("Not an array");
+  if (!Array.isArray(arr)) throw new Error("Not an array");
   return arr.reverse();
-
 }
 
 function reverseArrayInPlace(arr) {
@@ -334,63 +331,62 @@ console.log("----------------------------");
 
 */
 
-function arrayToList(arr){
-  if(!Array.isArray(arr)) throw new Error("Not an array");
+function arrayToList(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
   let list = null;
-  for(let i = arr.length - 1; i >= 0; i--){
-    list = {value: arr[i], rest: list};
+  for (let i = arr.length - 1; i >= 0; i--) {
+    list = { value: arr[i], rest: list };
   }
   return list;
-
 }
 
-function listToArray(list){
-
+function listToArray(list) {
   let arr = [];
-  for(let node = list; node; node = node.rest) {
+  for (let node = list; node; node = node.rest) {
     arr.push(node.value);
   }
   return arr;
 }
 
+//! Missing Recursive function
 
+function deepEqual(obj1, obj2) {
+  if (obj1 === obj2) return true;
 
+  if (
+    obj1 == null ||
+    typeof obj1 != "object" ||
+    obj2 == null ||
+    typeof obj2 != "object"
+  )
+    return false;
 
-//! Recursive function 
+  let keysObj1 = Object.keys(obj1),
+    keysObj2 = Object.keys(obj2);
 
-function deepEqual( obj1, obj2){
-  if(obj1 === obj2) return true;
+  if (keysObj1.length != keysObj2.length) return false;
 
-  if(obj1 == null || typeof obj1 != "object" || obj2 == null || typeof obj2 != "object") return false;
-
-  let keysObj1 = Object.keys(obj1), keysObj2 = Object.keys(obj2);
-
-  if(keysObj1.length != keysObj2.length) return false;
-
-  for(let key of keysObj1){
-    if(!keysObj2.includes(key) || !deepEqual(obj1[key], obj2[key])) return false;
+  for (let key of keysObj1) {
+    if (!keysObj2.includes(key) || !deepEqual(obj1[key], obj2[key]))
+      return false;
   }
 
   return true;
-};
+}
 
-
-
-
-
-
-//* SeconPart 
+//* SeconPart
 
 function quickSort(arr) {
-  if(!Array.isArray(arr)) throw new Error("Not an array");
+  if (!Array.isArray(arr)) throw new Error("Not an array");
 
-  if(arr.length <= 1) return arr;
+  if (arr.length <= 1) return arr;
 
   let pivot = arr[arr.length - 1];
-  let left = [], right = [];
+  let left = [],
+    right = [];
 
-  for(let i = 0; i < arr.length - 1; i++){
-    if(arr[i] < pivot){
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] < pivot) {
       left.push(arr[i]);
     } else {
       right.push(arr[i]);
@@ -401,7 +397,7 @@ function quickSort(arr) {
 
 console.log("\n________________Binary Tree_______________ \n");
 
-class node{
+class node {
   constructor(value) {
     this.value = value;
     this.left = null;
@@ -410,28 +406,26 @@ class node{
 }
 
 class BinarySearchTree {
-  
   constructor() {
     this.root = null;
   }
 
   isEmpty() {
     return this.root === null;
-
   }
 
   insert(value) {
     const newNode = new node(value);
-    if(this.isEmpty()){
-     this.root = newNode;
+    if (this.isEmpty()) {
+      this.root = newNode;
     } else {
       this.insertNode(this.root, newNode);
     }
   }
 
   insertNode(root, newNode) {
-    if(newNode.value < root.value){
-      if(root.left === null){
+    if (newNode.value < root.value) {
+      if (root.left === null) {
         root.left = newNode;
       } else {
         this.insertNode(root.left, newNode);
@@ -439,18 +433,18 @@ class BinarySearchTree {
     }
   }
 
-  search(root ,value) {
-    if(!root) {
+  search(root, value) {
+    if (!root) {
       return false;
-    }else {
-      if(root.value === value) {
+    } else {
+      if (root.value === value) {
         return true;
-      }else if(value < root.value) {
+      } else if (value < root.value) {
         return this.search(root.left, value);
-      }else {
+      } else {
         return this.search(root.right, value);
       }
-    } 
+    }
   }
 }
 
@@ -460,7 +454,6 @@ console.log("Tree is empty?", bst.isEmpty());
 bst.insert(10);
 bst.insert(5);
 bst.insert(15);
-
 
 console.log(bst.search(bst.root, 1));
 console.log(bst.search(bst.root, 5));
