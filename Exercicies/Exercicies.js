@@ -1,5 +1,8 @@
 const { sortAndDeduplicateDiagnostics } = require("typescript");
 
+//* exercicies day 1
+
+
 let quote =
   "Laziness is the mother of all bad habits. But ultimately, she is a mother and we should respect her.";
 let strCamelCase = "helloWorld";
@@ -42,7 +45,6 @@ function triangleStars2(num) {
 }
 
 function fizzBuzz(num) {
-
   if (typeof num !== "number") throw new Error("Not a number");
 
   for (let i = 1; i <= num; i++) {
@@ -153,35 +155,286 @@ const slugify = (str) =>
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-//   "mindera.com?a=1,2&b=3,4&c=four";
-
-
 
 function parseQueryString(url) {
   if (typeof url !== "string") throw new Error("Not a string");
 
-const[_, queryString] = url.split('?');
-const queryparams = queryString.split('&');
+  const [_, queryString] = url.split("?");
+  const queryparams = queryString.split("&");
 
-return queryparams.reduce((queryStringObject, queryParamater) => {
-  const [name, value] = queryParamater.split('=');
+  return queryparams.reduce((queryStringObject, queryParamater) => {
+    const [name, value] = queryParamater.split("=");
 
-  if(value.includes(',')) {
-    const elements = value.split(',')
-    .map((element) =>  {
-      if (!isNaN(element)) {
-        return Number(element);
-      } else {
-        return element;
-      }
-    })
+    if (value.includes(",")) {
+      const elements = value.split(",").map((element) => {
+        if (!isNaN(element)) {
+          return Number(element);
+        } else {
+          return element;
+        }
+      });
 
-    queryStringObject[name] = elements;
-  } else {
-    queryStringObject[name] = value;
+      queryStringObject[name] = elements;
+    } else {
+      queryStringObject[name] = value;
+    }
+
+    return queryStringObject;
+  }, {});
+}
+
+
+
+
+//* Array exercises day 2
+
+const arrayExemple = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const arrayExemple3 = [2, 7, 9, 23, 876, 999, 666];
+const arrayDuplicateExemple = [2, 2, 2, 6, 6, 6, 3, 3, 3];
+
+
+function sumOfARange(initialRange,EndRange ){
+  if (typeof initialRange !== "number" || typeof EndRange !== "number") throw new Error("Not a number");
+  let sum = 0;
+  for (let i = initialRange; i <= EndRange; i++) {
+    sum += i;
+  }
+  return sum;
+  
+}
+
+
+function sumOfRangeWithStep(initialRange,EndRange,stepNumber ){ 
+
+  if (typeof initialRange !== "number" || typeof EndRange !== "number" || typeof stepNumber !== "number") throw new Error("Not a number");
+  if(stepNumber === 0) throw new Error("Step number can't be 0");
+  if(undefined) throw new Error("Step number can't be undefined");  
+  
+  let sum = 0;
+
+  if(stepNumber < 0 && initialRange > EndRange) {
+
+  for (let i = initialRange; i <= EndRange; i = stepNumber) {
+    
+    sum += i;
+    console.log(i);
+  }
+  return sum;
+
+} else  {
+  for (let i = initialRange; i <= EndRange; i+=stepNumber) {
+    sum += i;
+    }
+  return sum;
+  }
+}
+
+
+//console.log(sumOfARange(1,10));
+//console.log(sumOfRangeWithStep(1,10,2));
+//console.log(sumOfRangeWithStep(5,55,5));
+//console.log(sumOfRangeWithStep(10, 2, -2));
+
+function reverseArray(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+
+  let arr2 = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    arr2.push(arr[i]);
+  }
+  return arr2;
+}
+
+function reverseArray2(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+
+  newArr = [];
+  arr.forEach(element => {
+    newArr.unshift(element);
+  });
+  return newArr;
+}
+
+function reverseArray3(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+  
+  newArr = [];
+  arr.forEach(element => {
+    newArr.push(element);
+  });
+  return newArr.reverse();
+}
+
+function reverseArray4(arr) {
+  if(!Array.isArray(arr)) throw new Error("Not an array");
+  return arr.reverse();
+
+}
+
+function reverseArrayInPlace(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+
+  for (let i = 0; i < arr.length / 2; i++) {
+    let temp = arr[i];
+    arr[i] = arr[arr.length - 1 - i];
+    arr[arr.length - 1 - i] = temp;
+  }
+  return arr;
+}
+
+function binarysearch() {}
+
+function removeArrayDuplicateElements(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+
+  let arr2 = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!arr2.includes(arr[i])) {
+      arr2.push(arr[i]);
+    }
+  }
+  return arr2;
+}
+
+function removeArrayDuplicateElements2(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+
+  let arr2 = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr2.indexOf(arr[i]) === -1) {
+      arr2.push(arr[i]);
+    }
+  }
+  return arr2;
+}
+
+function removeArrayDuplicateElements3(arr) {
+  if (!Array.isArray(arr)) throw new Error("Not an array");
+
+  return arr.filter((element, index) => arr.indexOf(element) === index);
+}
+
+/*
+console.log("___________________ Reverse Array____________________________________\n");
+console.log(reverseArray(arrayExemple));
+console.log(reverseArray(arrayExemple3))
+console.log("___________________ Reverse Array2___________________________________\n");
+console.log(reverseArray2(arrayExemple));
+console.log(reverseArray2(arrayExemple3))
+console.log("____________________Reverse Array3__________________________________\n");
+console.log(reverseArray3(arrayExemple));
+console.log(reverseArray3(arrayExemple3))
+console.log("____________________Reverse Array4__________________________________\n");
+console.log(reverseArray4(arrayExemple));
+console.log(reverseArray4(arrayExemple3))
+console.log("____________________Remove Duplicate________________________________\n");
+console.log("----------------------------");
+console.log(removeArrayDuplicateElements(arrayDuplicateExemple));
+console.log(removeArrayDuplicateElements2(arrayDuplicateExemple));
+console.log(removeArrayDuplicateElements3(arrayDuplicateExemple));
+console.log("----------------------------");
+
+*/
+
+//*Array exercises part 2
+
+
+function arrayToList(arr){
+  if(!Array.isArray(arr)) throw new Error("Not an array");
+  let list = null;
+  for(let i = arr.length - 1; i >= 0; i--){
+    list = {value: arr[i], rest: list};
+  }
+  return list;
+
+}
+
+function listToArray(list){
+
+  let arr = [];
+  for(let node = list; node; node = node.rest){
+    arr.push(node.value);
+  }
+  return arr;
+}
+
+
+//! Recursive function 
+
+function deepEqual( obj1, obj2){
+  if(obj1 === obj2) return true;
+
+  if(obj1 == null || typeof obj1 != "object" || obj2 == null || typeof obj2 != "object") return false;
+
+  let keysObj1 = Object.keys(obj1), keysObj2 = Object.keys(obj2);
+
+  if(keysObj1.length != keysObj2.length) return false;
+
+  for(let key of keysObj1){
+    if(!keysObj2.includes(key) || !deepEqual(obj1[key], obj2[key])) return false;
   }
 
-  return queryStringObject;
-}, {})};
+  return true;
+};
 
-//   "mindera.com?a=1,2&b=3,4&c=four";
+
+function quickSort(arr){
+  if(!Array.isArray(arr)) throw new Error("Not an array");
+
+  if(arr.length <= 1) return arr;
+
+  let pivot = arr[arr.length - 1];
+  let left = [], right = [];
+
+  for(let i = 0; i < arr.length - 1; i++){
+    if(arr[i] < pivot){
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+  return [...quickSort(left), pivot, ...quickSort(right)];
+}
+
+
+function binarySearch(arr, value){
+  if(!Array.isArray(arr)) throw new Error("Not an array");
+
+  let left = 0, right = arr.length - 1;
+
+  while(left <= right){
+    let middle = Math.floor((left + right) / 2);
+    if(arr[middle] === value) return middle;
+    if(arr[middle] < value){
+      left = middle + 1;
+    } else {
+      right = middle - 1;
+    }
+  }
+  return -1;
+}
+
+console.log(binarySearch([55,45,25,75,80, 15, 40 ], 30));
+console.log(binarySearch(arrayExemple3, 30));
+
+function arrayToBinaryTree(arr){
+  if(!Array.isArray(arr)) throw new Error("Not an array");
+
+  let tree = null;
+  for(let i = 0; i < arr.length; i++){
+    tree = add(tree, arr[i]);
+  }
+  return tree;
+
+}
+
+function add(tree, value){
+  if(tree == null) return {value, left: null, right: null};
+
+  if(value < tree.value){
+    tree.left = add(tree.left, value);
+  } else {
+    tree.right = add(tree.right, value);
+  }
+  return tree;
+}
