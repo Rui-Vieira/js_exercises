@@ -190,18 +190,51 @@ const arrayExemple = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const arrayExemple3 = [2, 7, 9, 23, 876, 999, 666];
 const arrayDuplicateExemple = [2, 2, 2, 6, 6, 6, 3, 3, 3];
 
+
+function range(start, end) {
+  
+  if (typeof start !== "number" || typeof end !== "number")
+    throw new Error("Not a number");
+
+  let array = [];
+  for (let i = start; i <= end; i++) {
+    array.push(i);
+  }
+  return array;
+};
+
 function sumOfARange(initialRange, EndRange) {
+
   if (typeof initialRange !== "number" || typeof EndRange !== "number")
     throw new Error("Not a number");
+
   let sum = 0;
   for (let i = initialRange; i <= EndRange; i++) {
     sum += i;
   }
   return sum;
-}
+};
 
 
- // ! NEED TO BE FIXED Negative spetNumber dont work
+function rangeWithStep(start, end, step) {
+  if (typeof start !== "number" || typeof end !== "number" || typeof step !== "number")
+    throw new Error("Not a number");
+  
+
+  let array = [];
+  if(step < 0) {
+  for (let i = start; i >= end; i = i + step ) {
+    array.push(i);
+    }
+  } else {
+    for (let i = start; i <= end; i = i + step) {
+      array.push(i);
+      }
+    } 
+  return array;
+  };
+
+
 function sumOfRangeWithStep(initialRange, EndRange, stepNumber) {
   if (
     typeof initialRange !== "number" ||
@@ -215,23 +248,19 @@ function sumOfRangeWithStep(initialRange, EndRange, stepNumber) {
   let sum = 0;
 
   if (stepNumber < 0 && initialRange > EndRange) {
-    for (let i = initialRange; i <= EndRange; i = stepNumber) {
+    for (let i = initialRange; i >= EndRange; i = i + stepNumber ) {
       sum += i;
       console.log(i);
     }
     return sum;
   } else {
-    for (let i = initialRange; i <= EndRange; i += stepNumber) {
+    for (let i = initialRange; i <= EndRange; i = i + stepNumber ) {
       sum += i;
     }
     return sum;
   }
 }
 
-//console.log(sumOfARange(1,10));
-//console.log(sumOfRangeWithStep(1,10,2));
-//console.log(sumOfRangeWithStep(5,55,5));
-//console.log(sumOfRangeWithStep(10, 2, -2));
 
 function reverseArray(arr) {
   if (!Array.isArray(arr)) throw new Error("Not an array");
@@ -339,7 +368,7 @@ function arrayToList(arr) {
     list = { value: arr[i], rest: list };
   }
   return list;
-}
+};
 
 function listToArray(list) {
   let arr = [];
@@ -347,31 +376,20 @@ function listToArray(list) {
     arr.push(node.value);
   }
   return arr;
-}
+};
 
-function listToArray2(list,array) {
-  
-  if (list.rest === null) {
-    return array;
-  }
-  return listToArrayWithRecursion([...array,list.value]);
-
-}
 
 
 function deepEqual(obj1, obj2) {
   if (obj1 === obj2) return true;
 
   if (
-    obj1 == null ||
-    typeof obj1 != "object" ||
-    obj2 == null ||
-    typeof obj2 != "object"
-  )
-    return false;
+    obj1 == null || typeof obj1 != "object" ||
+    obj2 == null || typeof obj2 != "object"){
+    return false;}
 
   let keysObj1 = Object.keys(obj1),
-    keysObj2 = Object.keys(obj2);
+      keysObj2 = Object.keys(obj2);
 
   if (keysObj1.length != keysObj2.length) return false;
 
@@ -392,7 +410,7 @@ function quickSort(arr) {
 
   let pivot = arr[arr.length - 1];
   let left = [],
-    right = [];
+      right = [];
 
   for (let i = 0; i < arr.length - 1; i++) {
     if (arr[i] < pivot) {
