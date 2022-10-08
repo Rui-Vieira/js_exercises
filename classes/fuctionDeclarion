@@ -1,0 +1,111 @@
+// Function declaration. Destructuring in the arguments list
+function foo({name, surname}) {
+​
+    console.log(name, surname);
+}
+​
+foo({name: "john", surname: "smith", middleName: "copper",});
+​
+//Function declaration. Destructuring inside the function
+function bar(obj) {
+    const { name, surname, middleName } = obj;
+​
+    console.log(name, middleName, surname );
+}
+​
+bar({name: "john", surname: "smith", middleName: "copper"});
+​
+//Function declaration. changing the name of the variables during destructuring
+function zam(obj) {
+    const {name: nome, surname: apelido} = obj;
+​
+    console.log(nome, apelido);
+}
+​
+zam({name: "john", surname: "smith", middleName: "copper"});
+​
+//Function expression. Those are not hoisted.
+//Extra arguments in any function are ignored
+//Arguments not passed are undefined.
+//We can pass default values like this function(a = "1", b = "2")
+const foobar = function({name, surname}) {
+    console.log(name,surname);
+};
+​
+foobar({name: "john", surname: "smith", middleName: "copper"});
+​
+//Arrow function.
+const barzam = ({name, surname}) => {
+    console.log(name,surname);
+};
+​
+barzam({name: "john", surname: "smith", middleName: "copper"});
+​
+//Arrow function with single argument and single line. return is implicit
+//Remember, arrow functions have no `this`
+//`this` is taken from the outer function, if any
+const zambam = obj => console.log(obj.name, obj.surname);
+​
+zambam({name: "john", surname: "smith", middleName: "copper"});
+​
+//new Function syntax. Very rare, use if receiving code from remote server, for example.
+const sum2 = new Function('a', 'b', 'return a + b');
+​
+console.log(sum2(1, 2));
+​
+//example of callback function
+//callback function is simple a function that is called inside another
+[1,2,3,4,5,6].filter((num) => num % 2 === 0);
+​
+//declaring function inside other functions;
+//Due to closures inner functions have access to the parent functions' scope
+function foozam(callback) {
+    const a = 2;
+    const b = 3;
+    console.log(a);
+​
+    function innerFunction() {
+        console.log(b);
+    }
+​
+    innerFunction();
+    callback();
+}
+​
+foozam(() => console.log(4));
+​
+//closures, calling an inner function outside of its parent function
+function zamzam(b) {
+    const a = 2;
+    console.log(a);
+​
+    function innerFunction() {
+        console.log(b);
+    }
+​
+    return innerFunction;
+}
+​
+const barbar = zamzam(3);
+​
+//The reference to any variables in the parent scope are kept in the inner function
+//even after the parent functions doesn't exist anymore
+function foofoo() {
+    let a = 1;
+​
+    function innerFunction() {
+        a++;
+        console.log(a);
+    }
+​
+    return innerFunction;
+}
+​
+const foobarzam = foofoo();
+const barzamfoo = foofoo();
+​
+foobarzam();
+foobarzam();
+barzamfoo();
+foobarzam();
+

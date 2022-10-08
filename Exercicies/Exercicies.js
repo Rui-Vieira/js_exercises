@@ -332,6 +332,7 @@ console.log("----------------------------");
 */
 
 function arrayToList(arr) {
+
   if (!Array.isArray(arr)) throw new Error("Not an array");
   let list = null;
   for (let i = arr.length - 1; i >= 0; i--) {
@@ -348,7 +349,15 @@ function listToArray(list) {
   return arr;
 }
 
-//! Missing Recursive function
+function listToArray2(list,array) {
+  
+  if (list.rest === null) {
+    return array;
+  }
+  return listToArrayWithRecursion([...array,list.value]);
+
+}
+
 
 function deepEqual(obj1, obj2) {
   if (obj1 === obj2) return true;
