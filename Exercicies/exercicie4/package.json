@@ -1,0 +1,11 @@
+{
+  "name": "exercicies",
+  "version": "1.0.0",
+  "description": "mindSwap_exercicies ",
+  "main": "Exercicies.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
